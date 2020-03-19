@@ -1,0 +1,63 @@
+import java.io.*; 
+import java.util.*; 
+class FactorsCombination { 
+
+    public static List<List<Integer> > factComb(int n) 
+    { 
+        List<List<Integer> > result_list = 
+                     new ArrayList<List<Integer> >(); 
+        List<Integer> list = new ArrayList<Integer>(); 
+
+        factorsListFunc(2, 1, n, result_list, list); 
+        return result_list; 
+    } 
+  
+    /*First is current factor to be considered. 
+    each_product is current product of factors.*/   
+    public static void factorsListFunc(int first,  
+                             int each_prod, int n,  
+    List<List<Integer> > result_list, List<Integer>         
+                               single_result_list) 
+    { 
+        
+        if (first > n || each_prod > n) 
+            return; 
+  
+        if (each_prod == n) { 
+  
+            ArrayList<Integer> t = 
+          new ArrayList<Integer>(single_result_list); 
+  
+            result_list.add(t); 
+  
+            return; 
+        } 
+
+        for (int i = first; i < n; i++) { 
+            if (i * each_prod > n) 
+                break; 
+
+            if (n % i == 0) { 
+  
+                single_result_list.add(i); 
+                 factorsListFunc(i, i * each_prod, n, 
+                  result_list, single_result_list); 
+                single_result_list.remove(single_result_list.size() - 1); 
+            } 
+        } 
+    } 
+    
+    public static void main(String[] args) 
+    { 
+        int n = 16; 
+        List<List<Integer> > resultant = factComb(n); 
+  
+        /* printing all possible combination 
+         of factors stored in resultant list */
+        for (List<Integer> i : resultant) { 
+            for (int j : i)  
+                System.out.print(j + " ");             
+            System.out.println(); 
+        } 
+    } 
+}
