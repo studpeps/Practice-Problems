@@ -1,0 +1,84 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the cutTheSticks function below.
+    static int[] cutTheSticks(int[] arr) {
+     int[] c=new int[arr.length];
+     int n=arr.length;
+     c[0]=arr.length;
+     int len=n;
+     int count=0;
+     Arrays.sort(arr);
+     int l=arr[0];
+     for(int k=1;k<arr.length;k++)
+     {
+      for(int j=0;j<arr.length;j++)
+       {
+         if(arr[j]>0)
+          arr[j]=arr[j]-l;
+       }
+       for(int m=0;m<arr.length;m++)
+         {
+             if(arr[m]>0)
+              {count++;}
+         }
+       if(count==0)
+        {
+         len=k;
+         break;
+        }
+       c[k]=count;
+       l=arr[n-count];
+       count=0;
+       
+     }
+    int[] r=new int[len];
+    for(int i=0;i<r.length;i++)
+    {
+        r[i]=c[i];
+    }
+     return (r);
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        int[] arr = new int[n];
+
+        String[] arrItems = scanner.nextLine().split(" ");
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        for (int i = 0; i < n; i++) {
+            int arrItem = Integer.parseInt(arrItems[i]);
+            arr[i] = arrItem;
+        }
+
+        int[] result = cutTheSticks(arr);
+
+        for (int i = 0; i < result.length; i++) {
+            bufferedWriter.write(String.valueOf(result[i]));
+
+            if (i != result.length - 1) {
+                bufferedWriter.write("\n");
+            }
+        }
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
